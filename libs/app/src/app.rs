@@ -1,4 +1,3 @@
-use game::Splat;
 use gfx::{Commands};
 use platform_types::{command, sprite, unscaled, Button, Input, Speaker, SFX};
 pub use platform_types::StateParams;
@@ -22,7 +21,6 @@ impl State {
         features::log(&format!("{:?}", seed));
 
         let mut game_state = game::State::new(seed);
-        //game_state.add_splat();
 
         Self {
             game_state,
@@ -64,33 +62,6 @@ impl platform_types::State for State {
     }
 }
 
-fn update(state: &mut game::State, input: Input, speaker: &mut Speaker) {
-    if input.gamepad != <_>::default() {
-        state.add_splat();
-        speaker.request_sfx(SFX::CardPlace);
-    }
-}
-
-#[inline]
-fn render(commands: &mut Commands, state: &game::State) {
-    for &Splat { kind, x, y } in &state.splats {
-        commands.draw_card(kind, x, y);
-
-        commands.sspr(
-            sprite::XY {
-                x: sprite::X(0),
-                y: sprite::Y(64),
-            },
-            command::Rect::from_unscaled(unscaled::Rect {
-                x: x.saturating_sub(unscaled::W(16)),
-                y: y.saturating_sub(unscaled::H(16)),
-                w: unscaled::W(16),
-                h: unscaled::H(16),
-            })
-        );
-    }
-}
-
 #[inline]
 fn update_and_render(
     commands: &mut Commands,
@@ -98,6 +69,5 @@ fn update_and_render(
     input: Input,
     speaker: &mut Speaker,
 ) {
-    update(state, input, speaker);
-    render(commands, state);
+    game::State::update_and_render(commands, state, input, speaker);
 }

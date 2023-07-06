@@ -2,5 +2,5 @@
 path=./rust-gdb
 
 [commands]
-Compile rename-me=shell cargo b --bin rename-me --profile debugging
-Run rename-me=file target/debugging/rename-me;run&
+Compile ice-puzzles=shell cargo b --bin ice-puzzles --profile debugging
+Run ice-puzzles=file target/debugging/ice-puzzles;run&

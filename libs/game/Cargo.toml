@@ -7,11 +7,20 @@ edition = "2021"
 [lib]
 path = "src/game.rs"
 
+[dependencies.gfx]
+path = "../gfx"
+
 [dependencies.models]
 path = "../models"
 
 [dependencies.platform_types]
 path = "../platform_types"
+
+[dependencies.common]
+path = "../legacy/common"
+
+[dependencies.state_manipulation]
+path = "../legacy/state_manipulation"
 
 [dependencies.xs]
 path = "../xs"

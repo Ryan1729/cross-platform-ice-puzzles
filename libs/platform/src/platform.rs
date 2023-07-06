@@ -17,7 +17,7 @@ pub fn run<S: State + 'static>(mut state: S) {
     let event_loop = EventLoop::new();
 
     let builder = WindowBuilder::new()
-        .with_title("rename-me");
+        .with_title("ice-puzzles");
 
     #[cfg(target_arch = "wasm32")]
     let builder = wasm::set_canvas(builder);
@@ -152,8 +152,8 @@ mod wasm {
         // browser will stretch it for us.
         let size = winit::dpi::Size::Physical(
             winit::dpi::PhysicalSize::new(
-                unscaled::WIDTH.into(),
-                unscaled::HEIGHT.into(),
+                platform_types::command::WIDTH.into(),
+                platform_types::command::HEIGHT.into(),
             ),
         );
 
