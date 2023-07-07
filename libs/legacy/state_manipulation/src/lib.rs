@@ -138,7 +138,7 @@ pub fn update_and_render(platform: &Platform, state: &mut State, events: &mut Ve
     }
 }
 
-fn draw_button(platform: &Platform, x: i32, y: i32, w: i32, h: i32, label: &str, pressed: bool) {
+fn draw_button(platform: &Platform, x: i32, y: i32, w: i32, h: i32, label: &'static str, pressed: bool) {
 
     if pressed {
         draw_pressed_button_rect(platform, x, y, w, h);
@@ -277,7 +277,7 @@ fn goal_string(frame_count: u32) -> &'static str {
     }
 }
 
-fn print_tuple(platform: &Platform, (x, y): (i32, i32), text: &str) {
+fn print_tuple(platform: &Platform, (x, y): (i32, i32), text: &'static str) {
     if x >= 0 && y >= 0 {
         (platform.print_xy)(x, y, text);
     }
@@ -327,7 +327,7 @@ fn draw_pressed_button_rect(platform: &Platform, x: i32, y: i32, w: i32, h: i32)
                    ["╔", "═", "╕", "║", "│", "╙", "─", "┘"]);
 }
 
-fn draw_rect_with(platform: &Platform, x: i32, y: i32, w: i32, h: i32, edges: [&str; 8]) {
+fn draw_rect_with(platform: &Platform, x: i32, y: i32, w: i32, h: i32, edges: [&'static str; 8]) {
     (platform.clear)(Some(Rect::from_values(x, y, w, h)));
 
     let right = x + w - 1;
@@ -356,7 +356,7 @@ fn draw_rect_with(platform: &Platform, x: i32, y: i32, w: i32, h: i32, edges: [&
 fn print_cell(platform: &Platform, coords: (i32, i32), cell: Cell, frame_count: u32) {
     match cell {
         Goal => print_tuple(platform, coords, goal_string(frame_count)),
-        _ => print_tuple(platform, coords, &cell.to_string()),
+        _ => print_tuple(platform, coords, cell.to_static_str()),
     }
     // with_layer!(platform, CELL_LAYER, {
     // })

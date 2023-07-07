@@ -1,4 +1,4 @@
-use platform_types::{ARGB, FONT_LENGTH, GFX_LENGTH};
+use platform_types::{ARGB, GFX_LENGTH};
 
 // reportedly colourblind friendly colours
 // https://twitter.com/ea_accessible/status/968595073184092160

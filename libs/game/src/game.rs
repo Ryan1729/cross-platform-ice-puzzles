@@ -11,7 +11,7 @@ pub struct State {
     events: Vec<Event>,
 }
 
-const TILE_SIZE: i32 = 45;
+const TILE_SIZE: unscaled::Inner = 45;
 
 impl State {
     pub fn new(seed: Seed) -> State {
@@ -19,7 +19,10 @@ impl State {
 
         State {
             rng,
-            state: state_manipulation::new_state(Size::new(TILE_SIZE, TILE_SIZE)),
+            state: state_manipulation::new_state(Size::new(
+                i32::from(TILE_SIZE),
+                i32::from(TILE_SIZE)
+            )),
             platform: Platform {
                 print_xy: platform::print_xy,
                 clear: platform::clear,
@@ -59,21 +62,60 @@ impl State {
             &mut state.state,
             &mut state.events
         );
+
+        platform::push_commands(commands);
+
+        platform::end_frame();
     }
 }
 
 mod platform {
     use super::*;
+    use platform_types::{sprite};
+    use std::{
+        collections::HashMap,
+        sync::{Mutex, OnceLock}
+    };
 
-    /// TODO use a static std::sync::OnceLock<Mutex<...>> to implement these properly.
-    pub fn print_xy(x: i32, y: i32, s: &str) {
-        
+    type X = unscaled::Inner;
+    type Y = unscaled::Inner;
+
+    struct State {
+        chars: HashMap<(X, Y), &'static str>,
+    }
+    
+    fn state() -> &'static Mutex<State> {
+        static STATE: OnceLock<Mutex<State>> = OnceLock::new();
+        STATE.get_or_init(|| Mutex::new(State {
+            chars: HashMap::with_capacity(128),
+        }))
+    }
+
+    macro_rules! state {
+        () => {
+            state().lock().expect("should not be poisoned")
+        }
+    }
+
+    /// `Platform` function pointers
+
+    pub fn print_xy(x_in: i32, y_in: i32, s: &'static str) {
+        assert_eq!(s.chars().count(), 1, "{s}");
+
+        match (X::try_from(x_in), Y::try_from(y_in)) {
+            (Ok(x), Ok(y)) => {
+                state!().chars.insert((x, y), s);
+            },
+            _ => {
+                assert!(false, "bad (x, y): ({x_in}, {y_in})");
+            }
+        }
     }
     pub fn clear(rect: Option<Rect>) {
 
     }
     pub fn size() -> Size {
-        Size::new(TILE_SIZE, TILE_SIZE)
+        Size::new(i32::from(TILE_SIZE), i32::from(TILE_SIZE))
     }
     pub fn pick(point: Point, _: i32) -> char {
         '\0'
@@ -113,5 +155,35 @@ mod platform {
     }
     pub fn get_layer() -> i32 {
         0
+    }
+
+    /// `platform` state management
+
+    pub fn push_commands(commands: &mut Commands) {
+        for ((x, y), s) in state!().chars.iter() {
+            let (sx, sy) = match s {
+                _ => {
+                    //debug_assert!(false, "unknown tile str: \"{s}\"");
+                    (0, 0)
+                }
+            };
+
+            commands.sspr(
+                sprite::XY {
+                    x: sprite::X(sx),
+                    y: sprite::Y(sy),
+                },
+                command::Rect::from_unscaled(unscaled::Rect {
+                    x: unscaled::X((x * TILE_SIZE) as _),
+                    y: unscaled::Y((y * TILE_SIZE) as _),
+                    w: unscaled::W(TILE_SIZE),
+                    h: unscaled::H(TILE_SIZE),
+                })
+            );
+        }
+    }
+        
+    pub fn end_frame() {
+        state!().chars.clear();
     }
 }

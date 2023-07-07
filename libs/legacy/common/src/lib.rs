@@ -8,7 +8,7 @@ use std::iter::Iterator;
 use std::iter::Cycle;
 
 pub struct Platform {
-    pub print_xy: fn(i32, i32, &str),
+    pub print_xy: fn(i32, i32, &'static str),
     pub clear: fn(Option<Rect>),
     pub size: fn() -> Size,
     pub pick: fn(Point, i32) -> char,
@@ -52,6 +52,15 @@ pub enum Motion {
     Right,
     Down,
     Left,
+}
+
+impl Cell {
+    pub fn to_static_str(self) -> &'static str {
+        match self {
+            Wall => "☒",
+            Goal => "\u{E010}",
+        }
+    }
 }
 
 impl ToString for Cell {
