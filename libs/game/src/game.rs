@@ -158,12 +158,22 @@ mod platform {
     }
 
     /// `platform` state management
-
     pub fn push_commands(commands: &mut Commands) {
         for ((x, y), s) in state!().chars.iter() {
-            let (sx, sy) = match s {
+            let (sx, sy) = match *s {
+                "☒" => (1 * TILE_SIZE, 0),
+                "\u{E010}" => (2 * TILE_SIZE, 0),
+                "\u{E011}" => (3 * TILE_SIZE, 0),
+                "\u{E012}" => (4 * TILE_SIZE, 0),
+                "\u{E013}" => (5 * TILE_SIZE, 0),
+                "\u{E014}" => (6 * TILE_SIZE, 0),
+                "\u{E015}" => (7 * TILE_SIZE, 0),
+                "\u{E016}" => (8 * TILE_SIZE, 0),
+                "\u{E017}" => (9 * TILE_SIZE, 0),
+                "\u{E018}" => (10 * TILE_SIZE, 0),
+                "@" => (3 * TILE_SIZE, 1 * TILE_SIZE),
                 _ => {
-                    //debug_assert!(false, "unknown tile str: \"{s}\"");
+                    debug_assert!(false, "unknown tile str: \"{s}\"");
                     (0, 0)
                 }
             };
