@@ -12,20 +12,20 @@ use rand::{StdRng, SeedableRng, Rng};
 //NOTE(Ryan1729): debug_assertions only appears to work correctly when the
 //crate is not a dylib. Assuming you make this crate *not* a dylib on release,
 //these configs should work
-#[cfg(debug_assertions)]
-#[no_mangle]
-pub fn new_state(size: Size) -> State {
-    //skip the title screen
-    println!("debug {}",
-             if cfg!(debug_assertions) { "on" } else { "off" });
-
-    let seed: &[_] = &[42];
-    let rng: StdRng = SeedableRng::from_seed(seed);
-
-    next_level(size, rng, 4)
-}
-
-#[cfg(not(debug_assertions))]
+//#[cfg(debug_assertions)]
+//#[no_mangle]
+//pub fn new_state(size: Size) -> State {
+    ////skip the title screen
+    //println!("debug {}",
+             //if cfg!(debug_assertions) { "on" } else { "off" });
+//
+    //let seed: &[_] = &[42];
+    //let rng: StdRng = SeedableRng::from_seed(seed);
+//
+    //next_level(size, rng, 4)
+//}
+//
+//#[cfg(not(debug_assertions))]
 #[no_mangle]
 pub fn new_state(size: Size) -> State {
     //show the title screen

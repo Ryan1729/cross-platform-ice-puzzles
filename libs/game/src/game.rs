@@ -172,6 +172,23 @@ mod platform {
                 "\u{E017}" => (9 * TILE_SIZE, 0),
                 "\u{E018}" => (10 * TILE_SIZE, 0),
                 "@" => (3 * TILE_SIZE, 1 * TILE_SIZE),
+                "R" => (4 * TILE_SIZE, 1 * TILE_SIZE),
+                "↑" => (3 * TILE_SIZE, 2 * TILE_SIZE),
+                "←" => (4 * TILE_SIZE, 2 * TILE_SIZE),
+                "↓" => (5 * TILE_SIZE, 2 * TILE_SIZE),
+                "→" => (7 * TILE_SIZE, 2 * TILE_SIZE),
+                "┌" => (3 * TILE_SIZE, 3 * TILE_SIZE),
+                "─" => (4 * TILE_SIZE, 3 * TILE_SIZE),
+                "╖" => (5 * TILE_SIZE, 3 * TILE_SIZE),
+                "│" => (6 * TILE_SIZE, 3 * TILE_SIZE),
+                "╘" => (7 * TILE_SIZE, 3 * TILE_SIZE),
+                "┘" => (8 * TILE_SIZE, 3 * TILE_SIZE),
+                "╔" => (3 * TILE_SIZE, 4 * TILE_SIZE),
+                "═" => (4 * TILE_SIZE, 4 * TILE_SIZE),
+                "╕" => (5 * TILE_SIZE, 4 * TILE_SIZE),
+                "║" => (6 * TILE_SIZE, 4 * TILE_SIZE),
+                "╙" => (7 * TILE_SIZE, 4 * TILE_SIZE),
+                "╝" => (8 * TILE_SIZE, 4 * TILE_SIZE),
                 _ => {
                     debug_assert!(false, "unknown tile str: \"{s}\"");
                     (0, 0)
