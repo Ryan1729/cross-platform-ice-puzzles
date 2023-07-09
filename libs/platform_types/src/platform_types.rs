@@ -646,8 +646,12 @@ pub mod command {
 
     // Small enough to fit on pretty much any reasonable device, at an aspect ratio
     // of 3:2 (1.5), which is a compromise between 4:3 (1.33...) and 16:9 (1.788...).
-    pub const WIDTH: Inner = 480;
-    pub const HEIGHT: Inner = 320;
+    //pub const WIDTH: Inner = 480;
+    //pub const HEIGHT: Inner = 320;
+
+    // Need more pixels to fit the current art
+    pub const WIDTH: Inner = 480 * 2;
+    pub const HEIGHT: Inner = 320 * 3;
 
     pub const LENGTH: usize = WIDTH as usize * HEIGHT as usize;
 
