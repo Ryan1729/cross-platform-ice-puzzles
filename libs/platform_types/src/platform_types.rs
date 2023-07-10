@@ -1057,6 +1057,17 @@ pub mod button {
         pub const LEFT  : Self = Self(1 << 6);
         pub const RIGHT : Self = Self(1 << 7);
 
+        pub const ALL : [Self; 8] = [
+            Self::A,
+            Self::B,
+            Self::SELECT,
+            Self::START,
+            Self::UP,
+            Self::DOWN,
+            Self::LEFT,
+            Self::RIGHT,
+        ];
+
         pub const fn contains(&self, other: Self) -> bool {
             self.0 & other.0 == other.0
         }

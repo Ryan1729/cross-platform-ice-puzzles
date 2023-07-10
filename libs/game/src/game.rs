@@ -1,7 +1,7 @@
 use common::*;
 use gfx::{Commands};
 use models::{Card, gen_card};
-use platform_types::{command, unscaled, Input, Speaker, SFX};
+use platform_types::{command, unscaled, Button, Input, Speaker, SFX};
 use xs::{Xs, Seed};
 
 pub struct State {
@@ -51,9 +51,35 @@ impl State {
         speaker: &mut Speaker,
     ) {
         state.events.clear();
-        match input {
-            _ => {
-                //state.events.push();
+        for button in Button::ALL {
+            macro_rules! button_to_key {
+                ($button: ident) => {
+                    match $button {
+                        Button::A => KeyCode::R,
+                        Button::UP => KeyCode::Up,
+                        Button::DOWN => KeyCode::Down,
+                        Button::LEFT => KeyCode::Left,
+                        Button::RIGHT => KeyCode::Right,
+                        // Something the game doesn't respond to
+                        _ => KeyCode::MouseFifth
+                    }
+                }
+            }
+
+            if input.pressed_this_frame(button) {
+                state.events.push(Event::KeyPressed {
+                    key: button_to_key!(button),
+                    ctrl: false,
+                    shift: false,
+                });
+            }
+
+            if input.released_this_frame(button) {
+                state.events.push(Event::KeyReleased {
+                    key: button_to_key!(button),
+                    ctrl: false,
+                    shift: false,
+                });
             }
         }
 
