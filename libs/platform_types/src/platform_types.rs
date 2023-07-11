@@ -650,8 +650,8 @@ pub mod command {
     //pub const HEIGHT: Inner = 320;
 
     // Need more pixels to fit the current art
-    pub const WIDTH: Inner = 480 * 2;
-    pub const HEIGHT: Inner = 320 * 3;
+    pub const WIDTH: Inner = 45 * 16;
+    pub const HEIGHT: Inner = 45 * 16;
 
     pub const LENGTH: usize = WIDTH as usize * HEIGHT as usize;
 

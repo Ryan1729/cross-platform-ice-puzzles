@@ -20,8 +20,8 @@ impl State {
         State {
             rng,
             state: state_manipulation::new_state(Size::new(
-                i32::from(TILE_SIZE),
-                i32::from(TILE_SIZE)
+                16,
+                16
             )),
             platform: Platform {
                 print_xy: platform::print_xy,
@@ -141,7 +141,7 @@ mod platform {
 
     }
     pub fn size() -> Size {
-        Size::new(i32::from(TILE_SIZE), i32::from(TILE_SIZE))
+        Size::new(16, 16)
     }
     pub fn pick(point: Point, _: i32) -> char {
         '\0'
@@ -187,6 +187,7 @@ mod platform {
     pub fn push_commands(commands: &mut Commands) {
         for ((x, y), s) in state!().chars.iter() {
             let (sx, sy) = match *s {
+                "☐" => (0, 0),
                 "☒" => (1 * TILE_SIZE, 0),
                 "\u{E010}" => (2 * TILE_SIZE, 0),
                 "\u{E011}" => (3 * TILE_SIZE, 0),
