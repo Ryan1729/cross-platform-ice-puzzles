@@ -76,7 +76,8 @@ pub fn run<S: State + 'static>(mut state: S) {
                     VK::Right => Button::RIGHT,
                     VK::Down => Button::DOWN,
 
-                    VK::Z => Button::A,
+                    VK::R => Button::A,
+                    //VK::Z => Button::A,
                     VK::X => Button::B,
 
                     // For those using the Dvorak layout.
